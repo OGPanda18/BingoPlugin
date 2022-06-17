@@ -1,0 +1,8 @@
+name: Bingo
+version: '${project.version}'
+main: bongus.bingo.Bingo
+api-version: 1.19
+authors: [ bongus ]
+commands:
+  bingo:
+    aliases: [bi]
