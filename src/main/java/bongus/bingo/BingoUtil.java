@@ -35,7 +35,7 @@ public class BingoUtil {
 
         // adds new BingoBoard for each person
         for(Player p : Bukkit.getServer().getOnlinePlayers()){
-            plugin.getPlayerBoards().put(p.getUniqueId(), new BingoBoard(p)); // <--- could this be the LEAK?
+            plugin.getPlayerBoards().put(p.getUniqueId(), new BingoBoard(p.getUniqueId())); // <--- could this be the LEAK?
             plugin.getPlayerBoards().get(p.getUniqueId()).updatePersonalBoard();
 
             p.setGameMode(GameMode.ADVENTURE);

@@ -9,11 +9,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class BingoBoard {
 
-    private Player p;
-    public Inventory personaBoard = Bukkit.createInventory(null, 45, ChatColor.BOLD + "         Bingo Board");
+    private UUID uuid;
+    public Inventory personalBoard = Bukkit.createInventory(null, 45, ChatColor.BOLD + "         Bingo Board");
     public static Inventory bingoInventory = Bukkit.createInventory(null, 45, ChatColor.BOLD + "         Bingo Board");
     public static Material[][] materialBoard = new Material[5][5];
     private boolean[][] boolBoard;
@@ -22,8 +23,8 @@ public class BingoBoard {
     private ItemStack completeItem = new ItemStack(Material.LIME_STAINED_GLASS_PANE);
 
 
-    public BingoBoard(Player p){
-        this.p = p;
+    public BingoBoard(UUID uuid){
+        this.uuid = uuid;
         boolBoard = new boolean[5][5];
 
     }
@@ -89,7 +90,7 @@ public class BingoBoard {
 
     // replaces found items with green glass of name
     public void updatePersonalBoard(){
-        personaBoard.setStorageContents(bingoInventory.getStorageContents());;
+        personalBoard.setStorageContents(bingoInventory.getStorageContents());;
         ItemMeta meta = blankItem.getItemMeta();
 
         int slot = 0;
@@ -98,7 +99,7 @@ public class BingoBoard {
                 if(x > 1 && x < 7 && boolBoard[x-2][y]){
                     meta.setDisplayName(ChatColor.GREEN + "" + capitalizeFirsts(bingoInventory.getContents()[slot].getType().toString().toLowerCase().replace('_',' ')));
                     completeItem.setItemMeta(meta);
-                    personaBoard.setItem(slot, completeItem);
+                    personalBoard.setItem(slot, completeItem);
                 }
                 slot++;
             }
@@ -113,11 +114,11 @@ public class BingoBoard {
 
     public void openPersonalBoard(){
         updatePersonalBoard();
-        p.openInventory(personaBoard);
+        Bukkit.getServer().getPlayer(uuid).openInventory(personalBoard);
     }
 
     public Inventory getPersonalBoard(){
-        return personaBoard;
+        return personalBoard;
     }
 
 

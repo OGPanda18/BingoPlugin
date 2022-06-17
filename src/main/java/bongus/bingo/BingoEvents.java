@@ -40,7 +40,7 @@ public class BingoEvents implements Listener {
     public void playerJoin(PlayerJoinEvent e){
         Player p = e.getPlayer();
         if(!plugin.getPlayerBoards().containsKey(p.getUniqueId())) {
-            plugin.getPlayerBoards().put(p.getUniqueId(), new BingoBoard(p));
+            plugin.getPlayerBoards().put(p.getUniqueId(), new BingoBoard(p.getUniqueId()));
         }
 
     }
