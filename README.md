@@ -1,5 +1,5 @@
 # BingoPlugin
-A simple bingo plugin for Spigot minecraft servers you can play with your friends!
+A simple bingo plugin for Spigot minecraft servers you can play with your friends! It's for version `1.19.x`!!
 
 ### Gameplay
 When a game starts, players will be teleported to a random area in the world and given a "Bingo Card" that they can right click to view
