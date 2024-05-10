@@ -31,6 +31,8 @@ public class BingoUtil {
         BingoBoard.generateBoard(plugin.getItemList());
         plugin.getPlayerBoards().clear();
 
+        // not sure why I had this, I guess if you don't want a new location each time?
+//        if(plugin.getGameLocation() == null)
         plugin.setGameLocation(randomLocation(world));
 
         // adds new BingoBoard for each person
@@ -48,6 +50,7 @@ public class BingoUtil {
             ItemStack knowledge = new ItemStack(Material.KNOWLEDGE_BOOK);
             ItemMeta meta = knowledge.getItemMeta();
             meta.setDisplayName(ChatColor.GREEN + "Bingo Card");
+
             knowledge.setItemMeta(meta);
 
             p.getInventory().setItem(8, knowledge);
@@ -87,6 +90,7 @@ public class BingoUtil {
         startTimer.cancel();
 
         Server server = Bukkit.getServer();
+        server.broadcastMessage("" + ChatColor.GREEN + ChatColor.UNDERLINE + "BINGO RESULTS");
         for(Player player : server.getOnlinePlayers()){
             server.broadcastMessage(player.getDisplayName() + ": " + ChatColor.GOLD + plugin.getPlayerBoards().get(player.getUniqueId()).score());
         }
@@ -118,6 +122,8 @@ public class BingoUtil {
     public void createBossBar(){
         bossBar = Bukkit.createBossBar("Time Left", BarColor.WHITE, BarStyle.SOLID);
         bossBar.setProgress(1);
+        bossBar.setColor(BarColor.GREEN);
+
         Bingo.timeLeft = Bingo.timeLimit;
 
         for(Player p : Bukkit.getServer().getOnlinePlayers()){
@@ -128,14 +134,19 @@ public class BingoUtil {
         // update timer until time is up; end game
         bossTimer = Bukkit.getScheduler().runTaskTimer(plugin, () -> {
             double increment = 1.0/(Bingo.timeLimit);
-            double newBar = bossBar.getProgress() - increment;
+//            double newBar = bossBar.getProgress() - increment;
+            double newBar = ((float) Bingo.timeLeft) / Bingo.timeLimit;
             if(newBar >= 0){
+
+                if(0.1 < newBar && newBar <= 0.4) bossBar.setColor(BarColor.YELLOW);
+                if(newBar <= 0.1) bossBar.setColor(BarColor.RED);
+
                 bossBar.setProgress(newBar);
                 bossBar.setTitle((Bingo.timeLeft/60) + ":" + String.format("%02d",Bingo.timeLeft % 60));
                 Bingo.timeLeft--;
             }
             else{ bossBar.removeAll(); bossTimer.cancel(); }
-        },400 + 1, 1);
+        },400 + 1, 20);
 
     }
 }

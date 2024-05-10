@@ -50,6 +50,8 @@ public class BingoBoard {
         meta.setDisplayName(" ");
         blankItem.setItemMeta(meta);
 
+        //h
+
 
         // fill inventory with board materials
         int slot = 0;
@@ -76,7 +78,7 @@ public class BingoBoard {
                 if(materialBoard[x][y] == material && !boolBoard[x][y]){
                     boolBoard[x][y] = true;
                     done = true;
-                    //Bukkit.getServer().broadcastMessage(ChatColor.GOLD + p.getName() + ChatColor.WHITE + " got an item!");
+                    Bukkit.getServer().broadcastMessage(ChatColor.GOLD + Bukkit.getServer().getPlayer(uuid).getName() + ChatColor.WHITE + " got an item!");
                 }
             }
         }
@@ -127,17 +129,22 @@ public class BingoBoard {
         int inRow = 0;
         int score = 0;
 
+        int bingos = 0;
+//        int itmes = 0;
+
         // vertical
         for(int x = 0; x < 5; x++){
             for(int y = 0; y < 5; y++) {
                 if(boolBoard[x][y]) {
                     inRow++;
+//                    items++;
                     score++;
                 }else {
                     continue;
                 }
             }
             if(inRow == 5){
+                bingos++;
                 score += 5;
             }
             inRow = 0;
@@ -153,6 +160,7 @@ public class BingoBoard {
                 }
             }
             if(inRow == 5){
+                bingos++;
                 score += 5;
             }
             inRow = 0;
@@ -168,6 +176,7 @@ public class BingoBoard {
         }
         if(inRow == 5){
             score += 5;
+            bingos++;
         }
         inRow = 0;
 
@@ -181,6 +190,7 @@ public class BingoBoard {
         }
         if(inRow == 5){
             score += 5;
+            bingos++;
         }
 
         return score;

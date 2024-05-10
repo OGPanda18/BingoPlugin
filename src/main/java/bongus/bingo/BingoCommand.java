@@ -38,6 +38,7 @@ public class BingoCommand implements CommandExecutor {
 
             if (args[0].equalsIgnoreCase("start")) {
                 plugin.getBingoUtil().startGame(p.getWorld());
+                return true;
             }
 
 //            if(args[0].equalsIgnoreCase("score")) {
@@ -50,15 +51,18 @@ public class BingoCommand implements CommandExecutor {
             if(args[0].equalsIgnoreCase("nether")){
                 Bingo.nether = !Bingo.nether;
                 p.sendMessage(ChatColor.RED + "Nether: " + Bingo.nether);
+                return true;
             }
 
             if(args[0].equalsIgnoreCase("end")){
                 plugin.getBingoUtil().endGame();
+                return true;
             }
 
             try{
                 Bingo.timeLimit = Integer.parseInt(args[0]);
                 plugin.getBingoUtil().startGame(p.getWorld());
+                return true;
             }catch(Exception e){
 
             }
